@@ -1,0 +1,11 @@
+{
+    "name" : "FancyPair",
+    "version" : "0.1",
+    "description" : "A fancy sub-class of Pair",
+    "author" : "Andrew Sterling Hanenkamp",
+    "provides" : {
+        "FancyPair": "lib/FancyPair.pm6"
+    },
+    "depends" : [ ],
+    "source-url" : "git://github.com/zostay/perl6-FancyPair.git"
+}
