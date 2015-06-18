@@ -4,6 +4,9 @@ class FancyPair is Pair {
     has $.fancy-key;
     has $.fancy-value is rw;
 
+    method key() { $!fancy-key }
+    method value() is rw { $!fancy-value }
+
     submethod BUILD($key, $value) {
         $!fancy-key   = $key;
         $!fancy-value = $value;
@@ -22,38 +25,30 @@ class FancyPair is Pair {
     multi method Str(FancyPair:D:) { $!fancy-key ~ "\t" ~ $!fancy-value }
 
     multi method gist(FancyPair:D:) {
-        if $!fancy-key ~~ Enum {
-            '(' ~ $!fancy-key.gist ~ ') =o> ' ~ $!fancy-value.gist;
-        } 
-        else {
-            $!fancy-key.gist ~ ' =o> ' ~ $!fancy-value.gist;
-        }
+        $!fancy-key.gist ~ ' =o> ' ~ $!fancy-value.gist;
     }
 
     multi method perl(FancyPair:D: :$arglist) {
-        if $!fancy-key ~~ Enum {
-            '(' ~ $!fancy-key.perl ~ ') =o> ' ~ $!fancy-value.perl;
-        } elsif $!fancy-key ~~ Str and !$arglist and $!fancy-key ~~ /^ [<alpha>\w*] +% <[\-']> $/ {
-            if $!fancy-value ~~ Bool {
-                ':' ~ '!' x !$!fancy-value ~ $!fancy-key;
-            } 
-            else {
-                ':' ~ $!fancy-key ~ '(' ~ $!fancy-value.perl ~ ')';
-            }
-        } 
-        else {
-            $!fancy-key.perl ~ ' =o> ' ~ $!fancy-value.perl;
-        }
+        $!fancy-key.perl ~ ' =O> ' ~ $!fancy-value.perl;
     }
 
     method fmt($format = "%s\t%s") {
         sprintf($format, $!fancy-key, $!fancy-value);
     }
 
-    multi method EXISTS-KEY(Enum:D: $key) { $key eqv $!fancy-key }
+    multi method EXISTS-KEY(FancyPair:D: $key) { $key eqv $!fancy-key }
 
-    method FLATTENABLE_LIST() { (self,).list }
-    method FLATTENABLE_HASH() { (self,).hash }
+    method FLATTENABLE_HASH() { 
+        my %h;
+        %h{ $!fancy-key } := $!fancy-value;
+        %h
+    }
+
+    method hash() { 
+        my %h;
+        %h{ $!fancy-key } := $!fancy-value;
+        %h
+    }
 
     multi method ACCEPTS(FancyPair:D: %h) {
         $.fancy-value.ACCEPTS(%h{$.fancy-key});
