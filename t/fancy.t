@@ -3,11 +3,11 @@
 use v6;
 
 use Test;
-use FancyPair;
+use KnottyPair;
 
 my $x = 42;
 my $p := 'Y' => $x;
-my $f := 'X' =O> $x;
+my $f := 'X' =X> $x;
 
 is $p{'Y'}, 42;
 is $f{'X'}, 42;
@@ -31,7 +31,8 @@ $x++;
 
 is $f{'X'}, 44;
 is $p{'Y'}, 42;
-is %h{'X'}, 43; # I WANT THIS TO BE 44
+is %h{'X'}, 43;
 is %h{'Y'}, 42;
 diag %h.perl;
 
+done;
