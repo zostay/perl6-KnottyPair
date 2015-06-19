@@ -17,15 +17,10 @@ $x++;
 is $p{'Y'}, 42;
 is $f{'X'}, 43;
 
-diag ($p, $f).hash.perl;
-diag ($f, $p).hash.perl;
-
 my %h = ($f, $p).hash;
-diag %h.perl;
 
 is %h{'X'}, 43;
 is %h{'Y'}, 42;
-diag %h.perl;
 
 $x++;
 
@@ -33,6 +28,5 @@ is $f{'X'}, 44;
 is $p{'Y'}, 42;
 is %h{'X'}, 43;
 is %h{'Y'}, 42;
-diag %h.perl;
 
 done;
