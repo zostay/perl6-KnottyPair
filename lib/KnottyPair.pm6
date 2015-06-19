@@ -72,41 +72,102 @@ Returns a new KnottyPair object with the key and value swapped.
 
 =head2 method keys
 
-    method keys(KnottyPair:D:) returns Mu
+    method keys(KnottyPair:D:) returns List:D
 
 Returns a single value list containing the key.
 
 =head2 method kv
 
+    method kv(KnottyPair:D:) returns List:D
+
+Returns the key and value as two elements of a list.
+
 =head2 method values
+
+    method values(KnottyPair:D:) returns List:D
+
+Returns the value in a single value list.
 
 =head2 method pairs
 
+    method pairs(KnottyPair:D:) returns List:D
+
+Returns the object itself in a single value list.
+
 =head2 method antipairs
+
+    method antipairs(KnottyPair:D:) returns List:D
+
+Returns the result of L<#method antipair> in a single value list.
 
 =head2 method invert
 
+    method invert(KnottyPair:D:) returns List:D
+
+Returns the result of L<#method antipair> in a single value list.
+
 =head2 method Str
+
+    method Str(KnottPair:D:) returns Str:D
+
+Returns a string containing the stringified key and value separated by a tab.
 
 =head2 method gist
 
+    method gist(KnottyPair:D:) returns Str:D
+
+Returns a string containing the key and value gists joined by C<< =x> >>.
+
 =head2 method perl
+
+    method perl(KnottyPair:D:) returns Str:D
 
 =head2 method fmt
 
+    method fmt(KnottyPair:D: Str $format = "%s\t%s") returns Str:D
+
+Given a printf-style format, returns the key/value pair formatted as requested.
+
 =head2 adverb :exists
+
+You may use the C<:exists> adverb to test for the existence of a key when using an hash lookup or slice. Returns true only for the key returned by L<#method key>.
 
 =head2 method ACCEPTS
 
-=head2 method postcircumfix:<[ ]>
+    multi method ACCEPTS(KnottyPair:D: %h) returns Bool:D
+    multi method ACCEPTS(KnottyPair:D: Mu $other) returns Bool:D
+
+Allows this object to be applied to smart match against other objects. 
+
+=item When applied to a hash, it returns true as long as the hash, C<%h>, contains a value at the key matching this key in a lookup that matches against this KnottyPair's value.
+
+=item When applied to anything else, it attempts to test the methdo named for the KnottyPair's key and see if it's boolean value matches the boolean value of the KnottyPair's value.
+
+=head2 method postcircumfix:<{ }>
+
+    method postcircumfix:<{ }> (KnottyPair:D: Mu $key) is rw returns Mu
+
+Performs a lookup on the pair. Returns an L<Any> type object unless C<$key> is structurally equivalent (i.e., using C<eqv>) to the KnottyPair's key, in which case it returns the value. You may also assign to this value or even bind using the associative lookup operator.
 
 =head2 method bind-value
+
+    method bind-value(KnottyPair:D: $new is rw)
+
+This causes the variable passed to be bound to the KnottyPair's value.
 
 =head1 OPERATORS
 
 =head2 method infix:«=x>»
 
+    method infix:«=x>» (Mu $key, Mu $value) returns KnottyPair:D
+
+This is the assignment constructor for KnottyPair. The C<$value> will not be bound.
+
 =head2 method infix:«=X>»
+
+    method infix:«=X>» (Mu $key, Mu $value is rw) returns KnottyPair:D
+
+This is teh binding constructor for KnottyPair. The C<$value> will be bound to the given value.
 
 =end pod
 
@@ -138,7 +199,7 @@ class KnottyPair is Pair {
         $!knotty-key.gist ~ ' =x> ' ~ $!knotty-value.gist;
     }
 
-    multi method perl(KnottyPair:D: :$arglist) {
+    multi method perl(KnottyPair:D:) {
         $!knotty-key.perl ~ ' =x> ' ~ $!knotty-value.perl;
     }
 
@@ -172,7 +233,7 @@ class KnottyPair is Pair {
         }
     }
 
-    method bind-value($new is rw) {
+    method bind-value(KnottyPair:D:$new is rw) {
         $!knotty-value := $new;
     }
 }
