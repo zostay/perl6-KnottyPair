@@ -1,11 +1,11 @@
 {
-    "name" : "FancyPair",
+    "name" : "KnottyPair",
     "version" : "0.1",
-    "description" : "A fancy sub-class of Pair",
+    "description" : "A sub-class of Pair with binding on values",
     "author" : "Andrew Sterling Hanenkamp",
     "provides" : {
-        "FancyPair": "lib/FancyPair.pm6"
+        "KnottyPair": "lib/KnottyPair.pm6"
     },
     "depends" : [ ],
-    "source-url" : "git://github.com/zostay/perl6-FancyPair.git"
+    "source-url" : "git://github.com/zostay/perl6-KnottyPair.git"
 }

@@ -1,6 +1,6 @@
 use v6;
 
-=NAME KnottyPair - A subclass of Pair with bindable values
+=NAME KnottyPair - A subclass of Pair with binding on values
 
 =begin SYNOPSIS
 
