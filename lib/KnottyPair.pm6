@@ -233,7 +233,7 @@ class KnottyPair is Pair {
         }
     }
 
-    method bind-value(KnottyPair:D:$new is rw) {
+    method bind-value(KnottyPair:D: $new is rw) {
         $!knotty-value := $new;
     }
 }
