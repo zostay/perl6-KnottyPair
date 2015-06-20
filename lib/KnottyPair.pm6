@@ -238,13 +238,12 @@ class KnottyPair is Pair {
     }
 }
 
-sub infix:«=x>» ($key, $value) is export {
+our sub infix:«=x>» ($key, $value) is export {
     KnottyPair.new(:$key, :$value);
 }
 
-sub infix:«=X>» ($key, $value is rw) is export {
+our sub infix:«=X>» ($key, $value is rw) is export {
     my $pair = KnottyPair.new(:$key, value => Any);
     $pair.bind-value($value);
     $pair;
 }
-
