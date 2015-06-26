@@ -176,10 +176,10 @@ This is teh binding constructor for KnottyPair. The C<$value> will be bound to t
 has $.knotty-key;
 has $.knotty-value is rw;
 
-method key() { $!knotty-key }
-method value() is rw { $!knotty-value }
+method key(KnottyPair:D:) { $!knotty-key }
+method value(KnottyPair:D:) is rw { $!knotty-value }
 
-submethod BUILD($key, $value) {
+submethod BUILD(KnottyPair:D: $key, $value) {
     $!knotty-key   = $key;
     $!knotty-value = $value;
     self;
@@ -204,7 +204,7 @@ multi method perl(KnottyPair:D:) {
     $!knotty-key.perl ~ ' =x> ' ~ $!knotty-value.perl;
 }
 
-method fmt($format = "%s\t%s") {
+method fmt(KnottyPair:D: $format = "%s\t%s") {
     sprintf($format, $!knotty-key, $!knotty-value);
 }
 
